@@ -10,28 +10,24 @@ import Foundation
 
 struct Solution {
     
-    // 704. Binary Search
+    // 412. Fizz Buzz
     
-    func search(_ nums: [Int], _ target: Int) -> Int {
-        var left = 0
-        var right = nums.count - 1
-        
-        while left <= right {
-            let mid = (left + right) / 2
-            let midValue = nums[mid]
-            
-            if midValue == target {
-                return mid
-            }
-            if midValue < target {
-                left = mid + 1
+    func fizzBuzz(_ n: Int) -> [String] {
+        var answer: [String] = []
+        for i in 1...n {
+            if i % 3 == 0 && i % 5 == 0 {
+                answer.append("FizzBuzz")
+            } else if i % 3 == 0 {
+                answer.append("Fizz")
+            } else if i % 5 == 0 {
+                answer.append("Buzz")
             } else {
-                right = mid - 1
+                answer.append(String(i))
             }
         }
-        return -1
+        return answer
     }
 }
 
 let test = Solution()
-print(test.search([-1, 0, 3, 5, 9, 12], 9))
+print(test.fizzBuzz(15))
