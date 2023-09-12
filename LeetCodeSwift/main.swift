@@ -10,7 +10,12 @@ import Foundation
 
 struct Solution {
     
+    // 1929. Concatenation of Array
+    
+    func getConcatenation(_ nums: [Int]) -> [Int] {
+        nums + nums
+    }
 }
 
 let test = Solution()
-print(test)
+print(test.getConcatenation([1, 3, 2]))
