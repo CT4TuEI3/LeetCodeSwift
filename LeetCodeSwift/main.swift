@@ -10,24 +10,23 @@ import Foundation
 
 struct Solution {
     
-    // 412. Fizz Buzz
+    // 26. Remove Duplicates from Sorted Array
     
-    func fizzBuzz(_ n: Int) -> [String] {
-        var answer: [String] = []
-        for i in 1...n {
-            if i % 3 == 0 && i % 5 == 0 {
-                answer.append("FizzBuzz")
-            } else if i % 3 == 0 {
-                answer.append("Fizz")
-            } else if i % 5 == 0 {
-                answer.append("Buzz")
+    func removeDuplicates(nums: inout [Int]) -> Int {
+        var arr = [Int]()
+        let maxValue = nums.max() ?? 0
+        for i in nums.indices {
+            if arr.contains(nums[i]) {
+                nums[i] = 10000
             } else {
-                answer.append(String(i))
+                arr.append(nums[i])
             }
         }
-        return answer
+        nums = nums.filter({ $0 <= maxValue })
+        return arr.count
     }
 }
 
 let test = Solution()
-print(test.fizzBuzz(15))
+var arr = [0,0,1,1,1,2,2,3,3,4]
+print(test.removeDuplicates(nums: &arr))
