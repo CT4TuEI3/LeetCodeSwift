@@ -10,23 +10,18 @@ import Foundation
 
 struct Solution {
     
-    // 26. Remove Duplicates from Sorted Array
+    // 28. Find the Index of the First Occurrence in a String
     
-    func removeDuplicates(nums: inout [Int]) -> Int {
-        var arr = [Int]()
-        let maxValue = nums.max() ?? 0
-        for i in nums.indices {
-            if arr.contains(nums[i]) {
-                nums[i] = 10000
-            } else {
-                arr.append(nums[i])
-            }
+    func strStr(_ haystack: String, _ needle: String) -> Int {
+        guard haystack.contains(needle) else { return -1 }
+        if let range = haystack.firstRange(of: needle) {
+            let startIndex = haystack.distance(from: haystack.startIndex, to: range.lowerBound)
+            return startIndex
+        } else {
+            return 0
         }
-        nums = nums.filter({ $0 <= maxValue })
-        return arr.count
     }
 }
 
 let test = Solution()
-var arr = [0,0,1,1,1,2,2,3,3,4]
-print(test.removeDuplicates(nums: &arr))
+print(test.strStr("sadbutsad", "sad"))
