@@ -10,26 +10,29 @@ import Foundation
 
 struct Solution {
     
-    // 1768. Merge Strings Alternately
+    // 1071. Greatest Common Divisor of Strings
     
-    func mergeAlternately(_ word1: String, _ word2: String) -> String {
-        var result = ""
-        let word1Chars = Array(word1)
-        let word2Chars = Array(word2)
-        let maxLength = max(word1Chars.count, word2Chars.count)
-        
-        for i in 0 ..< maxLength {
-            if i < word1Chars.count {
-                result.append(word1Chars[i])
+    func gcdOfStrings(_ str1: String, _ str2: String) -> String {
+        func gcd(_ a: Int, _ b: Int) -> Int {
+            var a = a
+            var b = b
+            while b != 0 {
+                let temp = b
+                b = a % b
+                a = temp
             }
-            if i < word2Chars.count {
-                result.append(word2Chars[i])
-            }
+            return a
+        }
+
+        guard str1 + str2 == str2 + str1 else {
+            return ""
         }
         
-        return result
+        let gcdLength = gcd(str1.count, str2.count)
+        
+        return String(str1.prefix(gcdLength))
     }
 }
 
 let test = Solution()
-print(test.mergeAlternately("a   b   c", "    p   q   r"))
+print(test.gcdOfStrings("ABCABC", "ABC"))
