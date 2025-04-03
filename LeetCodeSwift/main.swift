@@ -10,29 +10,13 @@ import Foundation
 
 struct Solution {
     
-    // 1071. Greatest Common Divisor of Strings
+    // 1431. Kids With the Greatest Number of Candies
     
-    func gcdOfStrings(_ str1: String, _ str2: String) -> String {
-        func gcd(_ a: Int, _ b: Int) -> Int {
-            var a = a
-            var b = b
-            while b != 0 {
-                let temp = b
-                b = a % b
-                a = temp
-            }
-            return a
-        }
-
-        guard str1 + str2 == str2 + str1 else {
-            return ""
-        }
-        
-        let gcdLength = gcd(str1.count, str2.count)
-        
-        return String(str1.prefix(gcdLength))
+    func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
+        guard let maxCandies = candies.max() else { return [] }
+        return candies.map { $0 + extraCandies >= maxCandies }
     }
 }
 
 let test = Solution()
-print(test.gcdOfStrings("ABCABC", "ABC"))
+print(test.kidsWithCandies([2,3,5,1,3], 3))
