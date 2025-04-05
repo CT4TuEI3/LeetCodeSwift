@@ -10,49 +10,34 @@ import Foundation
 
 class Solution {
     
-    // 605. Can Place Flowers
+    // 345. Reverse Vowels of a String
     
-    func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
-        if n == 0 {
-            return true
-        }
+    func reverseVowels(_ s: String) -> String {
+        let vowels: Set<Character> = ["a", "e", "i", "o", "u"]
+        var chars = Array(s)
+        var left = 0
+        var right = chars.count - 1
         
-        var i = 0
-        let length = flowerbed.count
-        var maxFlowers = 0
-        
-        while i < length {
-            if flowerbed[i] == 0 {
-                let start = i
-                while i < length && flowerbed[i] == 0 {
-                    i += 1
-                }
-                let end = i - 1
-                let L = end - start + 1
-                
-                let leftOccupied = start > 0 ? (flowerbed[start - 1] == 1) : false
-                let rightOccupied = end < length - 1 ? (flowerbed[end + 1] == 1) : false
-                
-                var count = 0
-                if leftOccupied && rightOccupied {
-                    count = (L - 1) / 2
-                } else if !leftOccupied && !rightOccupied {
-                    count = (L + 1) / 2
-                } else {
-                    count = L / 2
-                }
-                
-                maxFlowers += count
-                if maxFlowers >= n {
-                    return true
-                }
-            } else {
-                i += 1
+        while left < right {
+            // Поиск гласной слева
+            while left < right && !vowels.contains(Character(String(chars[left]).lowercased())) {
+                left += 1
+            }
+            // Поиск гласной справа
+            while left < right && !vowels.contains(Character(String(chars[right]).lowercased())) {
+                right -= 1
+            }
+            // Обмен символов
+            if left < right {
+                chars.swapAt(left, right)
+                left += 1
+                right -= 1
             }
         }
         
-        return maxFlowers >= n
+        return String(chars)
     }
 }
+
 let test = Solution()
-print(test.canPlaceFlowers([1,0,0,0,1], 1))
+print(test.reverseVowels("leetcode"))
