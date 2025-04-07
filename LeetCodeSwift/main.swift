@@ -8,36 +8,30 @@
 
 import Foundation
 
-class Solution {
+final class Solution {
     
-    // 345. Reverse Vowels of a String
+    // 238. Product of Array Except Self
     
-    func reverseVowels(_ s: String) -> String {
-        let vowels: Set<Character> = ["a", "e", "i", "o", "u"]
-        var chars = Array(s)
-        var left = 0
-        var right = chars.count - 1
+    func productExceptSelf(_ nums: [Int]) -> [Int] {
+        guard !nums.isEmpty else { return [] }
+        let n = nums.count
+        var answer = [Int](repeating: 1, count: n)
         
-        while left < right {
-            // Поиск гласной слева
-            while left < right && !vowels.contains(Character(String(chars[left]).lowercased())) {
-                left += 1
-            }
-            // Поиск гласной справа
-            while left < right && !vowels.contains(Character(String(chars[right]).lowercased())) {
-                right -= 1
-            }
-            // Обмен символов
-            if left < right {
-                chars.swapAt(left, right)
-                left += 1
-                right -= 1
-            }
+        // Вычисляем произведения элементов слева
+        for i in 1..<n {
+            answer[i] = answer[i - 1] * nums[i - 1]
         }
         
-        return String(chars)
+        var rightProduct = 1
+        // Обновляем ответ, умножая на произведения справа
+        for i in (0..<n).reversed() {
+            answer[i] *= rightProduct
+            rightProduct *= nums[i]
+        }
+        
+        return answer
     }
 }
 
 let test = Solution()
-print(test.reverseVowels("leetcode"))
+print(test.productExceptSelf([1,2,3,4]))
