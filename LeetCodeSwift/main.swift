@@ -10,28 +10,25 @@ import Foundation
 
 final class Solution {
     
-    // 238. Product of Array Except Self
+    // 334. Increasing Triplet Subsequence
     
-    func productExceptSelf(_ nums: [Int]) -> [Int] {
-        guard !nums.isEmpty else { return [] }
-        let n = nums.count
-        var answer = [Int](repeating: 1, count: n)
+    func increasingTriplet(_ nums: [Int]) -> Bool {
+        var first = Int.max
+        var second = Int.max
         
-        // Вычисляем произведения элементов слева
-        for i in 1..<n {
-            answer[i] = answer[i - 1] * nums[i - 1]
+        for num in nums {
+            if num <= first {
+                first = num
+            } else if num <= second {
+                second = num
+            } else {
+                return true
+            }
         }
         
-        var rightProduct = 1
-        // Обновляем ответ, умножая на произведения справа
-        for i in (0..<n).reversed() {
-            answer[i] *= rightProduct
-            rightProduct *= nums[i]
-        }
-        
-        return answer
+        return false
     }
 }
 
 let test = Solution()
-print(test.productExceptSelf([1,2,3,4]))
+print(test.increasingTriplet([1,2,3,4]))
