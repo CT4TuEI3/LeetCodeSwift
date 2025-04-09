@@ -10,25 +10,43 @@ import Foundation
 
 final class Solution {
     
-    // 334. Increasing Triplet Subsequence
+    // 443. String Compression
     
-    func increasingTriplet(_ nums: [Int]) -> Bool {
-        var first = Int.max
-        var second = Int.max
+    func compress(_ chars: inout [Character]) -> Int {
+        guard !chars.isEmpty else { return 0 }
         
-        for num in nums {
-            if num <= first {
-                first = num
-            } else if num <= second {
-                second = num
-            } else {
-                return true
+        var writeIndex = 0
+        var readIndex = 0
+        let n = chars.count
+        
+        while readIndex < n {
+            let currentChar = chars[readIndex]
+            var count = 0
+            
+            // Считаем количество повторений текущего символа
+            while readIndex < n && chars[readIndex] == currentChar {
+                readIndex += 1
+                count += 1
+            }
+            
+            // Записываем символ
+            chars[writeIndex] = currentChar
+            writeIndex += 1
+            
+            // Если повторений больше 1, записываем цифры количества
+            if count > 1 {
+                for digit in String(count) {
+                    chars[writeIndex] = digit
+                    writeIndex += 1
+                }
             }
         }
         
-        return false
+        return writeIndex
     }
 }
 
 let test = Solution()
-print(test.increasingTriplet([1,2,3,4]))
+
+var chars: [Character] = ["a","a","b","b","c","c","c"]
+print(test.compress(&chars))
