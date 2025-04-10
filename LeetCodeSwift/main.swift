@@ -10,43 +10,21 @@ import Foundation
 
 final class Solution {
     
-    // 443. String Compression
+    // 283. Move Zeroes
     
-    func compress(_ chars: inout [Character]) -> Int {
-        guard !chars.isEmpty else { return 0 }
+    func moveZeroes(_ nums: inout [Int]) {
+        var nonZeroIndex = 0
         
-        var writeIndex = 0
-        var readIndex = 0
-        let n = chars.count
-        
-        while readIndex < n {
-            let currentChar = chars[readIndex]
-            var count = 0
-            
-            // Считаем количество повторений текущего символа
-            while readIndex < n && chars[readIndex] == currentChar {
-                readIndex += 1
-                count += 1
-            }
-            
-            // Записываем символ
-            chars[writeIndex] = currentChar
-            writeIndex += 1
-            
-            // Если повторений больше 1, записываем цифры количества
-            if count > 1 {
-                for digit in String(count) {
-                    chars[writeIndex] = digit
-                    writeIndex += 1
-                }
+        for i in 0..<nums.count {
+            if nums[i] != 0 {
+                nums.swapAt(nonZeroIndex, i)
+                nonZeroIndex += 1
             }
         }
-        
-        return writeIndex
     }
 }
 
 let test = Solution()
 
-var chars: [Character] = ["a","a","b","b","c","c","c"]
-print(test.compress(&chars))
+var numbers = [0, 1, 0, 3, 12]
+print(test.moveZeroes(&numbers))
