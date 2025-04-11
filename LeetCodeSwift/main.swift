@@ -10,21 +10,25 @@ import Foundation
 
 final class Solution {
     
-    // 283. Move Zeroes
+    // 392. Is Subsequence
     
-    func moveZeroes(_ nums: inout [Int]) {
-        var nonZeroIndex = 0
+    func isSubsequence(_ s: String, _ t: String) -> Bool {
+        let sArray = Array(s)
+        let tArray = Array(t)
+        var i = 0
+        var j = 0
         
-        for i in 0..<nums.count {
-            if nums[i] != 0 {
-                nums.swapAt(nonZeroIndex, i)
-                nonZeroIndex += 1
+        while i < sArray.count && j < tArray.count {
+            if sArray[i] == tArray[j] {
+                i += 1
             }
+            j += 1
         }
+        
+        return i == sArray.count
     }
 }
 
 let test = Solution()
 
-var numbers = [0, 1, 0, 3, 12]
-print(test.moveZeroes(&numbers))
+print(test.isSubsequence("ahbgdc", "daasddsa"))
