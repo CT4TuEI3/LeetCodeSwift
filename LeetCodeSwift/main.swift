@@ -10,25 +10,31 @@ import Foundation
 
 final class Solution {
     
-    // 392. Is Subsequence
+    // 11. Container With Most Water
     
-    func isSubsequence(_ s: String, _ t: String) -> Bool {
-        let sArray = Array(s)
-        let tArray = Array(t)
-        var i = 0
-        var j = 0
+    func maxArea(_ height: [Int]) -> Int {
+        var maxWater = 0
+        var left = 0
+        var right = height.count - 1
         
-        while i < sArray.count && j < tArray.count {
-            if sArray[i] == tArray[j] {
-                i += 1
+        while left < right {
+            let currentHeight = min(height[left], height[right])
+            let currentWidth = right - left
+            let currentArea = currentHeight * currentWidth
+            
+            maxWater = max(maxWater, currentArea)
+            
+            if height[left] < height[right] {
+                left += 1
+            } else {
+                right -= 1
             }
-            j += 1
         }
         
-        return i == sArray.count
+        return maxWater
     }
 }
 
 let test = Solution()
 
-print(test.isSubsequence("ahbgdc", "daasddsa"))
+print(test.maxArea([1,8,6,2,5,4,8,3,7]))
