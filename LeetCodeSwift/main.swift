@@ -10,30 +10,38 @@ import Foundation
 
 final class Solution {
     
-    // 1534. Count Good Triplets
+    // 1679. Max Number of K-Sum Pairs
     
-    func countGoodTriplets(_ arr: [Int], _ a: Int, _ b: Int, _ c: Int) -> Int {
-        var count = 0
-        let n = arr.count
+    func maxOperations(_ nums: [Int], _ k: Int) -> Int {
+        var frequency = [Int: Int]()
+        for num in nums {
+            frequency[num] = (frequency[num] ?? 0) + 1
+        }
         
-        for i in 0..<n {
-            for j in i+1..<n {
-                for k in j+1..<n {
-                    let condition1 = abs(arr[i] - arr[j]) <= a
-                    let condition2 = abs(arr[j] - arr[k]) <= b
-                    let condition3 = abs(arr[i] - arr[k]) <= c
-                    
-                    if condition1 && condition2 && condition3 {
-                        count += 1
-                    }
+        var result = 0
+        var visited = Set<Int>()
+        
+        for num in frequency.keys {
+            if visited.contains(num) {
+                continue
+            }
+            let complement = k - num
+            if complement == num {
+                result += frequency[num]! / 2
+                visited.insert(num)
+            } else {
+                if let compFreq = frequency[complement] {
+                    result += min(frequency[num]!, compFreq)
+                    visited.insert(num)
+                    visited.insert(complement)
                 }
             }
         }
         
-        return count
+        return result
     }
 }
 
 let test = Solution()
 
-print(test.countGoodTriplets([1,8,6,2,5,4,8,3,7], 7, 0, 3))
+print(test.maxOperations([1,8,6,2,5,4,8,3,7], 7))
