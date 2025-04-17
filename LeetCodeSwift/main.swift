@@ -10,38 +10,29 @@ import Foundation
 
 final class Solution {
     
-    // 1679. Max Number of K-Sum Pairs
+    // 643. Maximum Average Subarray I
     
-    func maxOperations(_ nums: [Int], _ k: Int) -> Int {
-        var frequency = [Int: Int]()
-        for num in nums {
-            frequency[num] = (frequency[num] ?? 0) + 1
+    func findMaxAverage(_ nums: [Int], _ k: Int) -> Double {
+        guard nums.count >= k else { return 0 }
+        
+        var currentSum = 0
+        // Вычисляем сумму первого окна
+        for i in 0..<k {
+            currentSum += nums[i]
         }
         
-        var result = 0
-        var visited = Set<Int>()
+        var maxSum = currentSum
         
-        for num in frequency.keys {
-            if visited.contains(num) {
-                continue
-            }
-            let complement = k - num
-            if complement == num {
-                result += frequency[num]! / 2
-                visited.insert(num)
-            } else {
-                if let compFreq = frequency[complement] {
-                    result += min(frequency[num]!, compFreq)
-                    visited.insert(num)
-                    visited.insert(complement)
-                }
-            }
+        // Сдвигаем окно и обновляем максимальную сумму
+        for i in k..<nums.count {
+            currentSum += nums[i] - nums[i - k]
+            maxSum = max(maxSum, currentSum)
         }
         
-        return result
+        return Double(maxSum) / Double(k)
     }
 }
 
 let test = Solution()
 
-print(test.maxOperations([1,8,6,2,5,4,8,3,7], 7))
+print(test.findMaxAverage([1,8,6,2,5,4,8,3,7], 7))
