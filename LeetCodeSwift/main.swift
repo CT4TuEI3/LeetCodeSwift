@@ -10,29 +10,35 @@ import Foundation
 
 final class Solution {
     
-    // 643. Maximum Average Subarray I
+    // 1456. Maximum Number of Vowels in a Substring of Given Length
     
-    func findMaxAverage(_ nums: [Int], _ k: Int) -> Double {
-        guard nums.count >= k else { return 0 }
+    func maxVowels(_ s: String, _ k: Int) -> Int {
+        let vowels: Set<Character> = ["a", "e", "i", "o", "u"]
+        let characters = Array(s)
+        var currentVowels = 0
+        var maxVowels = 0
         
-        var currentSum = 0
-        // Вычисляем сумму первого окна
         for i in 0..<k {
-            currentSum += nums[i]
+            if vowels.contains(characters[i]) {
+                currentVowels += 1
+            }
+        }
+        maxVowels = currentVowels
+        
+        for i in k..<characters.count {
+            if vowels.contains(characters[i - k]) {
+                currentVowels -= 1
+            }
+            if vowels.contains(characters[i]) {
+                currentVowels += 1
+            }
+            maxVowels = max(maxVowels, currentVowels)
         }
         
-        var maxSum = currentSum
-        
-        // Сдвигаем окно и обновляем максимальную сумму
-        for i in k..<nums.count {
-            currentSum += nums[i] - nums[i - k]
-            maxSum = max(maxSum, currentSum)
-        }
-        
-        return Double(maxSum) / Double(k)
+        return maxVowels
     }
 }
 
 let test = Solution()
 
-print(test.findMaxAverage([1,8,6,2,5,4,8,3,7], 7))
+print(test.maxVowels("abciiidef", 3))
