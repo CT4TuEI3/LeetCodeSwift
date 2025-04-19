@@ -10,35 +10,32 @@ import Foundation
 
 final class Solution {
     
-    // 1456. Maximum Number of Vowels in a Substring of Given Length
+    // 1004. Max Consecutive Ones III
     
-    func maxVowels(_ s: String, _ k: Int) -> Int {
-        let vowels: Set<Character> = ["a", "e", "i", "o", "u"]
-        let characters = Array(s)
-        var currentVowels = 0
-        var maxVowels = 0
+    func longestOnes(_ nums: [Int], _ k: Int) -> Int {
+        var left = 0
+        var maxLength = 0
+        var zeroCount = 0
         
-        for i in 0..<k {
-            if vowels.contains(characters[i]) {
-                currentVowels += 1
+        for right in 0..<nums.count {
+            if nums[right] == 0 {
+                zeroCount += 1
             }
-        }
-        maxVowels = currentVowels
-        
-        for i in k..<characters.count {
-            if vowels.contains(characters[i - k]) {
-                currentVowels -= 1
+            
+            while zeroCount > k {
+                if nums[left] == 0 {
+                    zeroCount -= 1
+                }
+                left += 1
             }
-            if vowels.contains(characters[i]) {
-                currentVowels += 1
-            }
-            maxVowels = max(maxVowels, currentVowels)
+            
+            maxLength = max(maxLength, right - left + 1)
         }
         
-        return maxVowels
+        return maxLength
     }
 }
 
 let test = Solution()
 
-print(test.maxVowels("abciiidef", 3))
+print(test.longestOnes([1,1,1,0,0,0,1,1,1,1,0], 3))
