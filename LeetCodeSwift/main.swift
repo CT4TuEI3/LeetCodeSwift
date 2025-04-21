@@ -10,27 +10,23 @@ import Foundation
 
 final class Solution {
     
-    // 1493. Longest Subarray of 1's After Deleting One Element
+    // 1732. Find the Highest Altitude
     
-    func longestSubarray(_ nums: [Int]) -> Int {
-        var left = 0
-        var lastZero = -1
-        var maxLength = 0
+    func largestAltitude(_ gain: [Int]) -> Int {
+        var currentAltitude = 0
+        var maxAltitude = 0
         
-        for i in 0..<nums.count {
-            if nums[i] == 0 {
-                if lastZero != -1 {
-                    left = lastZero + 1
-                }
-                lastZero = i
+        for change in gain {
+            currentAltitude += change
+            if currentAltitude > maxAltitude {
+                maxAltitude = currentAltitude
             }
-            let currentLength = i - left + 1
-            maxLength = max(maxLength, currentLength - 1)
         }
-        return maxLength
+        
+        return maxAltitude
     }
 }
 
 let test = Solution()
 
-print(test.longestSubarray([1,1,1,0,0,0,1,1,1,1,0]))
+print(test.largestAltitude([-5,1,5,0,-7]))
