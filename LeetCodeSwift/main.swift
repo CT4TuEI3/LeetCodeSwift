@@ -10,23 +10,24 @@ import Foundation
 
 final class Solution {
     
-    // 1732. Find the Highest Altitude
+    // 724. Find Pivot Index
     
-    func largestAltitude(_ gain: [Int]) -> Int {
-        var currentAltitude = 0
-        var maxAltitude = 0
+    func pivotIndex(_ nums: [Int]) -> Int {
+        let totalSum = nums.reduce(0, +)
+        var leftSum = 0
         
-        for change in gain {
-            currentAltitude += change
-            if currentAltitude > maxAltitude {
-                maxAltitude = currentAltitude
+        for (index, num) in nums.enumerated() {
+            let rightSum = totalSum - leftSum - num
+            if leftSum == rightSum {
+                return index
             }
+            leftSum += num
         }
         
-        return maxAltitude
+        return -1
     }
 }
 
 let test = Solution()
 
-print(test.largestAltitude([-5,1,5,0,-7]))
+print(test.pivotIndex([1,7,3,6,5,6]))
