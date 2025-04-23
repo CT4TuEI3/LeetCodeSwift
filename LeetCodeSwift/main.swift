@@ -10,24 +10,19 @@ import Foundation
 
 final class Solution {
     
-    // 724. Find Pivot Index
+    // 2215. Find the Difference of Two Arrays
     
-    func pivotIndex(_ nums: [Int]) -> Int {
-        let totalSum = nums.reduce(0, +)
-        var leftSum = 0
-        
-        for (index, num) in nums.enumerated() {
-            let rightSum = totalSum - leftSum - num
-            if leftSum == rightSum {
-                return index
-            }
-            leftSum += num
-        }
-        
-        return -1
+    func findDifference(_ nums1: [Int], _ nums2: [Int]) -> [[Int]] {
+        let set1 = Set(nums1)
+        let set2 = Set(nums2)
+    
+        let diff1 = set1.subtracting(set2)
+        let diff2 = set2.subtracting(set1)
+    
+        return [Array(diff1), Array(diff2)]
     }
 }
 
 let test = Solution()
 
-print(test.pivotIndex([1,7,3,6,5,6]))
+print(test.findDifference([2,4,6], [1,2,3]))
