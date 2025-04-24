@@ -10,19 +10,27 @@ import Foundation
 
 final class Solution {
     
-    // 2215. Find the Difference of Two Arrays
+    // 1207. Unique Number of Occurrences
     
-    func findDifference(_ nums1: [Int], _ nums2: [Int]) -> [[Int]] {
-        let set1 = Set(nums1)
-        let set2 = Set(nums2)
-    
-        let diff1 = set1.subtracting(set2)
-        let diff2 = set2.subtracting(set1)
-    
-        return [Array(diff1), Array(diff2)]
+    func uniqueOccurrences(_ arr: [Int]) -> Bool {
+        var frequencyDict = [Int: Int]()
+        
+        for num in arr {
+            frequencyDict[num] = (frequencyDict[num] ?? 0) + 1
+        }
+        
+        var frequencySet = Set<Int>()
+        for (_, count) in frequencyDict {
+            if frequencySet.contains(count) {
+                return false
+            }
+            frequencySet.insert(count)
+        }
+        
+        return true
     }
 }
 
 let test = Solution()
 
-print(test.findDifference([2,4,6], [1,2,3]))
+print(test.uniqueOccurrences([1,2,2,1,1,3]))
