@@ -10,38 +10,40 @@ import Foundation
 
 final class Solution {
     
-    // 1657. Determine if Two Strings Are Close
+    // 2352. Equal Row and Column Pairs
     
-    func closeStrings(_ word1: String, _ word2: String) -> Bool {
-        if word1.count != word2.count {
-            return false
+    func equalPairs(_ grid: [[Int]]) -> Int {
+        let n = grid.count
+        var rowDict = [String: Int]()
+        
+        // Создаем хэш-таблицу для строк
+        for row in grid {
+            let key = row.map { String($0) }.joined(separator: ",")
+            rowDict[key] = (rowDict[key] ?? 0) + 1
         }
         
-        let word1Array = Array(word1)
-        let word2Array = Array(word2)
+        var colDict = [String: Int]()
         
-        var freq1 = [Character: Int]()
-        var freq2 = [Character: Int]()
-        
-        for char in word1Array {
-            freq1[char] = (freq1[char] ?? 0) + 1
+        // Создаем хэш-таблицу для столбцов
+        for j in 0..<n {
+            var column = [Int]()
+            for i in 0..<n {
+                column.append(grid[i][j])
+            }
+            let key = column.map { String($0) }.joined(separator: ",")
+            colDict[key] = (colDict[key] ?? 0) + 1
         }
         
-        for char in word2Array {
-            freq2[char] = (freq2[char] ?? 0) + 1
+        // Подсчитываем количество совпадающих пар
+        var result = 0
+        for (key, count) in rowDict {
+            result += count * (colDict[key] ?? 0)
         }
         
-        if Set(freq1.keys) != Set(freq2.keys) {
-            return false
-        }
-        
-        let sortedFreq1 = freq1.values.sorted()
-        let sortedFreq2 = freq2.values.sorted()
-        
-        return sortedFreq1 == sortedFreq2
+        return result
     }
 }
 
 let test = Solution()
 
-print(test.closeStrings("abc", "bca"))
+print(test.equalPairs([[3,2,1],[1,7,6],[2,7,7]]))
