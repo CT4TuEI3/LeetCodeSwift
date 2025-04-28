@@ -10,40 +10,27 @@ import Foundation
 
 final class Solution {
     
-    // 2352. Equal Row and Column Pairs
+    // 2390. Removing Stars From a String
     
-    func equalPairs(_ grid: [[Int]]) -> Int {
-        let n = grid.count
-        var rowDict = [String: Int]()
+    func removeStars(_ s: String) -> String {
+        var stack = [Character]()
         
-        // Создаем хэш-таблицу для строк
-        for row in grid {
-            let key = row.map { String($0) }.joined(separator: ",")
-            rowDict[key] = (rowDict[key] ?? 0) + 1
-        }
-        
-        var colDict = [String: Int]()
-        
-        // Создаем хэш-таблицу для столбцов
-        for j in 0..<n {
-            var column = [Int]()
-            for i in 0..<n {
-                column.append(grid[i][j])
+        for char in s {
+            if char == "*" {
+                // Удаляем последний добавленный символ (ближайший слева от звезды)
+                if !stack.isEmpty {
+                    stack.removeLast()
+                }
+            } else {
+                // Добавляем обычный символ в стек
+                stack.append(char)
             }
-            let key = column.map { String($0) }.joined(separator: ",")
-            colDict[key] = (colDict[key] ?? 0) + 1
         }
         
-        // Подсчитываем количество совпадающих пар
-        var result = 0
-        for (key, count) in rowDict {
-            result += count * (colDict[key] ?? 0)
-        }
-        
-        return result
+        return String(stack)
     }
 }
 
 let test = Solution()
 
-print(test.equalPairs([[3,2,1],[1,7,6],[2,7,7]]))
+print(test.removeStars("leet**cod*e"))
